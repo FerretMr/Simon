@@ -96,7 +96,7 @@ async def announce(ctx, ping : bool,*,announcement):
         await channel.send('@everyone',delete_after=True)
     embed = discord.Embed(title=None,description= announcement,color=Color)
     await channel.send(embed=embed)
-    await log(Type='Announcment sent',User=ctx.author,OnUser=ctx.author,Command=f'kick {member} {reason}',Message=ctx.message)
+    await log(Type='Announcment sent',User=ctx.author,OnUser=None,Command=f'kick {member} {reason}',Message=ctx.message)
 
 @bot.command()
 @commands.cooldown(rate=1, per=5)
