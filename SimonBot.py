@@ -215,15 +215,6 @@ async def on_command_error(ctx, error):
     await ctx.author.send(error)
 
 @bot.event
-async def on_message(message):
-    for x in range(0, Bad_Words.count(str)):
-        if Bad_Words(x) in str(messgae).split():
-            list = ['language young man.','language young woman.','language my child','wash your mouth!','that\'s not nice of you!']
-            await message.delete(delay=None)
-            await message.channel.send(f'{message.author.mention}, {random.choice(list)}')
-    await bot.process_commands(message)
-
-@bot.event
 async def on_member_join(member):
     list = [f'{member}, aye.',f'Oh wow, {member} appeared.',f'{member} just flew in, wooshhh.',f'Teehee, {member} I was hoping you\'d join.',f'{member} came with some pizza, let him in.',f'{member} is here to love and hate.',f'Roses are red, violets are blue, {member} joined the server with you.',f'{member}, where\'s the pizza?',f'{member} :eyes:',f'{member} enjoys being {member}.',f'{member}, the council will decide your fate.']
     channel = bot.get_channel(686338279678803988)
