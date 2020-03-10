@@ -25,17 +25,13 @@ async def log(Type,User,OnUser,Command,Message):
     Channel = Message.channel
     logs = bot.get_channel(686339474661441537)
     if OnUser != None:
-        embed = discord.Embed(
-        title=None,
-        description=f'{Type},\nTarget: {OnUser}\n`{Prefix}{Command},`\n{Channel.mention}.',
-        color=Color
-        )
+        embed = discord.Embed(title=Type,description=f'**Channel:** {Message.channel.mention}, `{Message.channel.id}`.\n**Victim:** {OnUser.mention}, `{OnUser.id}`.\n`{Prefix}{Command} || {Message.id}.`',color=Color)
+        embed.set_footer(text=f'Divine || {Message.channel.mention}')
+        embed.set_author(name=str(User), icon_url=User.avatar_url)
     else:
-        embed = discord.Embed(
-        title=None,
-        description=f'{Type},\n`{Prefix}{Command},`\n{Channel.mention}.',
-        color=Color
-        )
+        embed = discord.Embed(title=Type,description=f'**Channel:** {Message.channel.mention}, `{Message.channel.id}`.\n`{Prefix}{Command} || {Message.id}.`',color=Color)
+        embed.set_footer(text=f'Divine || {Message.channel.mention}')
+        embed.set_author(name=str(User), icon_url=User.avatar_url)
     embed.set_footer(text=f'{User.id}, {User}')
     await logs.send(embed=embed)
 
@@ -61,11 +57,14 @@ async def clear(ctx, amount : int):
 @bot.command()
 @commands.has_permissions(manage_messages=True)
 @commands.cooldown(rate=1, per=5)
-async def warn(ctx, member : discord.Member, *, reason):
+async def warn(ctx, member : discord.Member, *, warning):
     await ctx.message.delete(delay=None)
-    await log(Type='Moderater Action',User=ctx.author,OnUser=member,Command=f'kick {member} {reason}',Message=ctx.message)
-    await ctx.author.send(f'{member} was warned.')
-    await member.send(f'**You have been warned.\nModerator Note:** {reason}\n *- {ctx.author}*')
+    await log(Type='Member warned',User=ctx.author,OnUser=member,Command=f'warn {member} {warning}',Message=ctx.message)
+    embed = discord.Embed(title='Warning',description=warning,color=Color)
+    embed.set_footer(text=f'Divine || {member.id}')
+    embed.set_author(name=str(ctx.author), icon_url=ctx.author.avatar_url)
+    await member.send(embed=embed)
+    await ctx.author.send(embed=embed)
 
 @bot.command()
 @commands.cooldown(rate=2, per=30)
@@ -73,9 +72,12 @@ async def warn(ctx, member : discord.Member, *, reason):
 async def kick(ctx, member : discord.Member, *, reason):
     await ctx.message.delete(delay=None)
     await member.kick(reason=reason)
-    await log(Type='Moderater Action',User=ctx.author,OnUser=member,Command=f'kick {member} {reason}',Message=ctx.message)
-    await ctx.author.send(f'{member} was kicked.')
-    await member.send(f'**You have been kicked.\nModerator Note:** {reason}\n *- {ctx.author}*')
+    await log(Type='Member kicked',User=ctx.author,OnUser=member,Command=f'kick {member} {reason}',Message=ctx.message)
+    embed = discord.Embed(title='Kick',description=warning,color=Color)
+    embed.set_footer(text=f'Divine || {member.id}')
+    embed.set_author(name=str(ctx.author), icon_url=ctx.author.avatar_url)
+    await member.send(embed=embed)
+    await ctx.author.send(embed=embed)
 
 @bot.command()
 @commands.cooldown(rate=2, per=60)
@@ -83,9 +85,12 @@ async def kick(ctx, member : discord.Member, *, reason):
 async def ban(ctx, member : discord.Member, *, reason):
     await ctx.message.delete(delay=None)
     await member.ban(reason=reason)
-    await log(Type='Moderater Action',User=ctx.author,OnUser=member,Command=f'kick {member} {reason}',Message=ctx.message)
-    await ctx.author.send(f'{member} was banned.')
-    await member.author.send(f'**You have been banned.\nModerator Note:** {reason}\n *- {ctx.author}*')
+    await log(Type='Member banned',User=ctx.author,OnUser=member,Command=f'ban {member} {reason}',Message=ctx.message)
+    embed = discord.Embed(title='Ban',description=warning,color=Color)
+    embed.set_footer(text=f'Divine || {member.id}')
+    embed.set_author(name=str(ctx.author), icon_url=ctx.author.avatar_url)
+    await member.send(embed=embed)
+    await ctx.author.send(embed=embed)
 
 @bot.command()
 @commands.cooldown(rate=1, per=60)
@@ -96,7 +101,7 @@ async def announce(ctx, ping : bool,*,announcement):
         await channel.send('@everyone',delete_after=True)
     embed = discord.Embed(title=None,description= announcement,color=Color)
     await channel.send(embed=embed)
-    await log(Type='Announcment sent',User=ctx.author,OnUser=None,Command=f'kick {member} {reason}',Message=ctx.message)
+    await log(Type='Announcment sent',User=ctx.author,OnUser=None,Command=f'announce {ping} {announcement}',Message=ctx.message)
 
 @bot.command()
 @commands.cooldown(rate=1, per=5)
