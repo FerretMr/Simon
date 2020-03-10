@@ -12,7 +12,7 @@ main_status = "Divine || ?help"
 guild = bot.get_guild(686333272359436359)
 Bad_Words = ['nigga','nigger','niggeran','Nigga','NIGGA','NIggA','niGaa','fuck','f*','f***','f*ck','shit','shitty','fucking','f*cking','fucky','sh*t','shite','ass','asshole','assh*le','bitch','b*tch','dick','d*ck','cunt','c*nt','pussy','p*ssy','c*ck','cock','fucker']
 
-Color = 16774656
+Color = 15898955
 Version = 'V.1.0.1'
 Build = 'Alpha'
 Divine_Owners = [359038724161667072,527610923419172864]
