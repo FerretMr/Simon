@@ -101,7 +101,7 @@ async def announce(ctx, ping : bool,*,announcement):
     if ping == True:
         await channel.send('@everyone',delete_after=True)
     embed = discord.Embed(title=None,description= announcement,color=Color)
-    embed.set_footer(text=f'Divine || {author.id}')
+    embed.set_footer(text=f'Divine || {ctx.author.id}')
     embed.set_author(name=str(ctx.author), icon_url=ctx.author.avatar_url)
     await channel.send(embed=embed)
     await log(Type='Announcment sent',User=ctx.author,OnUser=None,Command=f'announce {ping} {announcement}',Message=ctx.message)
@@ -296,7 +296,6 @@ async def on_raw_reaction_add(payload):
 
 @bot.event
 async def on_command_error(ctx, error):
-    await ctx.message.delete(delay=None)
     await ctx.author.send(error)
 
 @bot.event
