@@ -17,7 +17,7 @@ Version = 'V.1.0.1'
 Build = 'Alpha'
 Divine_Owners = [359038724161667072,527610923419172864]
 welcome_channel = bot.get_channel(686338066327273493)
-Topics = ['trees','gaming','gamer-girls','science','school','anime','relationships','programming','art','discord','music','depression','homeless-people','nudes','sexual-comments','youtubers','twitter','simonbot','divine','aliens']
+Topics = ['women-rights','icons','logos','discord-bots','bussiness','trees','gaming','gamer-girls','science','school','anime','relationships','programming','art','discord','music','depression','homeless-people','nudes','sexual-comments','youtubers','twitter','simonbot','divine','aliens']
 
 #Classes
 
@@ -41,7 +41,7 @@ async def log(Type,User,OnUser,Command,Message):
 async def help(ctx):
     await ctx.message.delete(delay=None)
     embed = discord.Embed(title=None,
-    description= 'Hello, I\'m Simon!~\nI\'m a bot developed for Divine, so no you can\'t have me in your own server, sorry!~\n\nMy commands are;\n*?help, brings up this help message!~\n?role <Role>, to toggle your <Role>!~ For a list of the roles just do `?roles list`, or anything instead of a Role!~\n?warn <User> <Warning>, Moderation command: warn <User> for <Warning>!~\n?kick <User> <Reason>, Moderation command: kick <User> for <Reason>!~\n?ban <User> <Reason>, Moderation command: warn <User> for <Reason>!~\n?clear <Amount>, Moderater command: Clears the <Amount> of messages for you!~\n?rtopics, Moderater command: Randomizes the topic channels for you!~\n?status <Status>, Moderater command: changes the bots status to `Watching <Status>` or the main status if <Status> is `main`, for you!~*',
+    description= 'Hello, I\'m Simon!~\nI\'m a bot developed for Divine, so no you can\'t have me in your own server, sorry!~\n\nMy commands are;\n*?help, brings up this help message!~\n?role <Role>, to toggle your <Role>!~ For a list of the roles just do `?roles list`, or anything instead of a Role!~\n?warn <User> <Warning>, Moderation command: warn <User> for <Warning>!~\n?kick <User> <Reason>, Moderation command: kick <User> for <Reason>!~\n?ban <User> <Reason>, Moderation command: warn <User> for <Reason>!~\n?clear <Amount>, Moderater command: Clears the <Amount> of messages for you!~\n?rtopics, Moderater command: Randomizes the topic channels for you!~\n?status <Status>, Moderater command: changes the bots status to `Watching <Status>` or the main status if <Status> is `main`, for you!~\n?reward <Member> <Badge>, Moderater command: gives <Member> the <Badge> for you!~*',
     color=Color)
     embed.set_footer(text=ctx.author)
     await ctx.author.send(embed=embed)
@@ -96,10 +96,13 @@ async def ban(ctx, member : discord.Member, *, reason):
 @commands.cooldown(rate=1, per=60)
 @commands.has_permissions(manage_messages=True)
 async def announce(ctx, ping : bool,*,announcement):
+    await ctx.message.delete(delay=None)
     channel = bot.get_channel(686338128163766344)
     if ping == True:
         await channel.send('@everyone',delete_after=True)
     embed = discord.Embed(title=None,description= announcement,color=Color)
+    embed.set_footer(text=f'Divine || {author.id}')
+    embed.set_author(name=str(ctx.author), icon_url=ctx.author.avatar_url)
     await channel.send(embed=embed)
     await log(Type='Announcment sent',User=ctx.author,OnUser=None,Command=f'announce {ping} {announcement}',Message=ctx.message)
 
@@ -108,7 +111,7 @@ async def announce(ctx, ping : bool,*,announcement):
 async def role(ctx,role : str):
     guild = ctx.guild
     if role == None:
-        await ctx.send('Have a list of roles you can pick!~\n- weeb\n- single\n- taken\n- female\n- male\n- bi\n- e-girl\n- memer')
+        await ctx.send('Have a list of roles you can pick!~\n- Gender\n    male\n    female\n    trans\n- Sexualtiy\n    straight\n    gay\n    bi\n- Extra\n     gamer\n    memer\n    e-girl\n    weeb')
     elif role == 'weeb':
         role = guild.get_role(686344964871028801)
         if role in ctx.author.roles:
@@ -131,7 +134,14 @@ async def role(ctx,role : str):
             await ctx.author.add_roles(role)
         await ctx.send('Toggled the role, enjoy!~')
     elif role == 'male':
-        role = guild.get_role(686345158383501337)
+        role = guild.get_role(686345253938003993)
+        if role in ctx.author.roles:
+            await ctx.author.remove_roles(role)
+        else:
+            await ctx.author.add_roles(role)
+        await ctx.send('Toggled the role, enjoy!~')
+    elif role == 'trans':
+        role = guild.get_role(687773911588274178)
         if role in ctx.author.roles:
             await ctx.author.remove_roles(role)
         else:
@@ -165,8 +175,74 @@ async def role(ctx,role : str):
         else:
             await ctx.author.add_roles(role)
         await ctx.send('Toggled the role, enjoy!~')
+    elif role == 'gamer':
+        role = guild.get_role(687764393009610752)
+        if role in ctx.author.roles:
+            await ctx.author.remove_roles(role)
+        else:
+            await ctx.author.add_roles(role)
+        await ctx.send('Toggled the role, enjoy!~')
+    elif role == 'straight':
+        role = guild.get_role(687764522643095662)
+        if role in ctx.author.roles:
+            await ctx.author.remove_roles(role)
+        else:
+            await ctx.author.add_roles(role)
+            await ctx.send('Toggled the role, enjoy!~')
+    elif role == 'gay':
+        role = guild.get_role(687764552951005207)
+        if role in ctx.author.roles:
+            await ctx.author.remove_roles(role)
+        else:
+            await ctx.author.add_roles(role)
+            await ctx.send('Toggled the role, enjoy!~')
     else:
-        await ctx.send('Have a list of roles you can pick!~\n- weeb\n- single\n- taken\n- female\n- male\n- bi\n- e-girl\n- memer')
+        await ctx.send('Have a list of roles you can pick!~\n- Gender\n    male\n    female\n    trans\n- Sexualtiy\n    straight\n    gay\n    bi\n- Extra\n     gamer\n    memer\n    e-girl\n    weeb')
+
+@bot.command()
+@commands.cooldown(rate=1, per=5)
+@commands.has_permissions(manage_messages=True)
+async def reward(ctx,member : discord.Member,*,badge):
+    guild = ctx.guild
+    if badge == 'list':
+        await ctx.send('There\'s are our badges!~\n-Competition Winner\n-Early Supporter\n-Chatter\n-Founder\n-Partner')
+    elif badge == 'Competition Winner':
+        role = guild.get_role(687764619745427615)
+        if role in member.roles:
+            await member.remove_roles(role)
+        else:
+            await member.add_roles(role)
+        await ctx.send('Toggled the role, enjoy!~')
+    elif badge == 'Early Supporter':
+        role = guild.get_role(687764390598279174)
+        if role in member.roles:
+            await member.remove_roles(role)
+        else:
+            await member.add_roles(role)
+        await ctx.send('Toggled the role, enjoy!~')
+    elif badge == 'Chatter':
+        role = guild.get_role(687765632300875787)
+        if role in member.roles:
+            await member.remove_roles(role)
+        else:
+            await member.add_roles(role)
+        await ctx.send('Toggled the role, enjoy!~')
+    elif badge == 'Founder':
+        role = guild.get_role(687775096844451846)
+        if role in member.roles:
+            await member.remove_roles(role)
+        else:
+            await member.add_roles(role)
+        await ctx.send('Toggled the role, enjoy!~')
+    elif badge == 'Partner':
+        role = guild.get_role(687775094436528195)
+        if role in member.roles:
+            await member.remove_roles(role)
+        else:
+            await member.add_roles(role)
+        await ctx.send('Toggled the role, enjoy!~')
+    else:
+        await ctx.send('There\'s are our badges!~\n-Competition Winner\n-Early Supporter\n-Chatter\n-Founder\n-Partner')
 
 @bot.command()
 @commands.cooldown(rate=1, per=60)
@@ -212,6 +288,10 @@ async def on_raw_reaction_add(payload):
         guild = bot.get_guild(686333272359436359)
         role = guild.get_role(686344645231640576)
         user = guild.get_member(payload.user_id)
+        await user.add_roles(role)
+        role = guild.get_role(687765696913997864)
+        await user.add_roles(role)
+        role = guild.get_role(687765773137084500)
         await user.add_roles(role)
 
 @bot.event
