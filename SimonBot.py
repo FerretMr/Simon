@@ -300,7 +300,7 @@ async def on_command_error(ctx, error):
 
 @bot.event
 async def on_member_join(member):
-    list = [f'{member}, aye.',f'Oh wow, {member} appeared.',f'{member} just flew in, wooshhh.',f'Teehee, {member} I was hoping you\'d join.',f'{member} came with some pizza, let him in.',f'{member} is here to love and hate.',f'Roses are red, violets are blue, {member} joined the server with you.',f'{member}, where\'s the pizza?',f'{member} :eyes:',f'{member} enjoys being {member}.',f'{member}, the council will decide your fate.']
+    list = [f'Who\'s in the server? {member} is!~',f'Welcome {member}, where\'s your papperwork?',f'Welcome to Divine, {member}. Enjoy your stay!~',f'{member}, aye.',f'Oh wow, {member} appeared.',f'{member} just flew in, wooshhh.',f'Teehee, {member} I was hoping you\'d join.',f'{member} came with some pizza, let him in.',f'{member} is here to love and hate.',f'Roses are red, violets are blue, {member} joined the server with you.',f'{member}, where\'s the pizza?',f'{member} :eyes:',f'{member} enjoys being {member}.',f'{member}, the council will decide your fate.']
     channel = bot.get_channel(686338279678803988)
     await channel.send(random.choice(list))
 
