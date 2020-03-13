@@ -3,6 +3,8 @@ import discord
 from discord.ext import commands
 import time
 import random
+import threading
+from threading import Thread
 
 #Common Settings;
 Prefix = '?'
@@ -12,6 +14,7 @@ main_status = "Divine || ?help"
 guild = bot.get_guild(686333272359436359)
 Bad_Words = ['nigga','nigger','niggeran','Nigga','NIGGA','NIggA','niGaa','fuck','f*','f***','f*ck','shit','shitty','fucking','f*cking','fucky','sh*t','shite','ass','asshole','assh*le','bitch','b*tch','dick','d*ck','cunt','c*nt','pussy','p*ssy','c*ck','cock','fucker']
 
+mute_list = []
 Color = 15898955
 Version = 'V.1.0.1'
 Build = 'Alpha'
@@ -20,6 +23,16 @@ welcome_channel = bot.get_channel(686338066327273493)
 Topics = ['women-rights','icons','logos','discord-bots','bussiness','trees','gaming','gamer-girls','science','school','anime','relationships','programming','art','discord','music','depression','homeless-people','nudes','sexual-comments','youtubers','twitter','simonbot','divine','aliens']
 
 #Classes
+
+def mmute(minutes,member):
+    mute_list.append(member)
+    time.sleep(minutes * 60)
+    mute_list.remove(member)
+
+import threading
+def mute_user(minutes,member):
+    download_thread = threading.Thread(target=mmute, args=(minutes,member))
+    download_thread.start()
 
 async def log(Type,User,OnUser,Command,Message):
     Channel = Message.channel
@@ -41,7 +54,7 @@ async def log(Type,User,OnUser,Command,Message):
 async def help(ctx):
     await ctx.message.delete(delay=None)
     embed = discord.Embed(title=None,
-    description= 'Hello, I\'m Simon!~\nI\'m a bot developed for Divine, so no you can\'t have me in your own server, sorry!~\n\nMy commands are;\n*?help, brings up this help message!~\n?role <Role>, to toggle your <Role>!~ For a list of the roles just do `?roles list`, or anything instead of a Role!~\n?warn <User> <Warning>, Moderation command: warn <User> for <Warning>!~\n?kick <User> <Reason>, Moderation command: kick <User> for <Reason>!~\n?ban <User> <Reason>, Moderation command: warn <User> for <Reason>!~\n?clear <Amount>, Moderater command: Clears the <Amount> of messages for you!~\n?rtopics, Moderater command: Randomizes the topic channels for you!~\n?status <Status>, Moderater command: changes the bots status to `Watching <Status>` or the main status if <Status> is `main`, for you!~\n?reward <Member> <Badge>, Moderater command: gives <Member> the <Badge> for you!~*',
+    description= 'Hello, I\'m Simon!~\nI\'m a bot developed for Divine, so no you can\'t have me in your own server, sorry!~\n\nMy commands are;\n*?help, brings up this help message!~\n?role <Role>, to toggle your <Role>!~ For a list of the roles just do `?roles list`, or anything instead of a Role!~\n?warn <User> <Warning>, Moderation command: warn <User> for <Warning>!~\n?kick <User> <Reason>, Moderation command: kick <User> for <Reason>!~\n?ban <User> <Reason>, Moderation command: warn <User> for <Reason>!~\n?clear <Amount>, Moderater command: Clears the <Amount> of messages for you!~\n?rtopics, Moderater command: Randomizes the topic channels for you!~\n?status <Status>, Moderater command: changes the bots status to `Watching <Status>` or the main status if <Status> is `main`, for you!~\n?reward <Member> <Badge>, Moderater command: gives <Member> the <Badge> for you!~*\n?mute <Member> <Minutes> <Reason>, Moderater command: Mutes the <Member> for the amount of <Minutes>!~*\n?unmute <Member> <Reason>, Moderater command: Unmutes the <Member>!~*',
     color=Color)
     embed.set_footer(text=ctx.author)
     await ctx.author.send(embed=embed)
@@ -52,7 +65,23 @@ async def help(ctx):
 async def clear(ctx, amount : int):
     await ctx.channel.purge(limit=amount + 1)
     await ctx.author.send(f'Cleared {amount} messages for you!~')
-    await log(Type='Moderater Action',User=ctx.author,OnUser=None,Command=f'clear {amount}',Message=ctx.message)
+    await log(Type='Bulk Message Delete',User=ctx.author,OnUser=None,Command=f'clear {amount}',Message=ctx.message)
+
+@bot.command()
+@commands.has_permissions(manage_messages=True)
+@commands.cooldown(rate=1, per=5)
+async def mute(ctx, member : discord.Member, minutes : int,*,reason):
+    await ctx.message.delete(delay=None)
+    mute_user(member=member,minutes=minutes)
+    await log(Type='Member muted',User=ctx.author,OnUser=None,Command=f'mute {member} {minutes} {reason}',Message=ctx.message)
+
+@bot.command()
+@commands.has_permissions(manage_messages=True)
+@commands.cooldown(rate=1, per=5)
+async def unmute(ctx, member : discord.Member,*,reason):
+    await ctx.message.delete(delay=None)
+    mute_list.remove(member)
+    await log(Type='Member unmuted',User=ctx.author,OnUser=None,Command=f'mute {member} {reason}',Message=ctx.message)
 
 @bot.command()
 @commands.has_permissions(manage_messages=True)
@@ -303,6 +332,13 @@ async def on_member_join(member):
     list = [f'Who\'s in the server? {member} is!~',f'Welcome {member}, where\'s your papperwork?',f'Welcome to Divine, {member}. Enjoy your stay!~',f'{member}, aye.',f'Oh wow, {member} appeared.',f'{member} just flew in, wooshhh.',f'Teehee, {member} I was hoping you\'d join.',f'{member} came with some pizza, let him in.',f'{member} is here to love and hate.',f'Roses are red, violets are blue, {member} joined the server with you.',f'{member}, where\'s the pizza?',f'{member} :eyes:',f'{member} enjoys being {member}.',f'{member}, the council will decide your fate.']
     channel = bot.get_channel(686338279678803988)
     await channel.send(random.choice(list))
+
+@bot.event
+async def on_message(message):
+    if message.author in mute_list:
+        await message.delete(delay=None)
+
+    await bot.process_commands(message)
 
 #Running
 bot.run(token)
