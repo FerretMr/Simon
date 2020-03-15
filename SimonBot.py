@@ -29,6 +29,10 @@ def mmute(minutes,member):
     time.sleep(minutes * 60)
     mute_list.remove(member)
 
+def giveaway():
+    channel = bot.get_channel(686338128163766344)
+    channel.send()
+
 import threading
 def mute_user(minutes,member):
     download_thread = threading.Thread(target=mmute, args=(minutes,member))
@@ -49,6 +53,9 @@ async def log(Type,User,OnUser,Command,Message):
     await logs.send(embed=embed)
 
 #Commands
+
+@bot.command()
+async def giveaway(ctx,*,arguments):
 
 @bot.command()
 async def help(ctx):
@@ -163,7 +170,7 @@ async def role(ctx,role : str):
             await ctx.author.add_roles(role)
         await ctx.send('Toggled the role, enjoy!~')
     elif role == 'male':
-        role = guild.get_role(686345253938003993)
+        role = guild.get_role(686345158383501337)
         if role in ctx.author.roles:
             await ctx.author.remove_roles(role)
         else:
