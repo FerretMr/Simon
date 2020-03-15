@@ -54,8 +54,6 @@ async def log(Type,User,OnUser,Command,Message):
 
 #Commands
 
-@bot.command()
-async def giveaway(ctx,*,arguments):
 
 @bot.command()
 async def help(ctx):
