@@ -24,6 +24,20 @@ Topics = ['women-rights','icons','logos','discord-bots','bussiness','trees','gam
 
 #Classes
 
+locked_channels = []
+
+@bot.command()
+@commands.cooldown(rate=1, per=5)
+@commands.has_role(686344052471234560)
+async def lock(ctx):
+    locked_channels.append(ctx.channel)
+
+@bot.command()
+@commands.cooldown(rate=1, per=5)
+@commands.has_role(686344052471234560)
+async def unlock(ctx):
+    locked_channels.remove(ctx.channel)
+
 def mmute(minutes,member):
     mute_list.append(member)
     time.sleep(minutes * 60)
@@ -340,6 +354,10 @@ async def on_member_join(member):
 
 @bot.event
 async def on_message(message):
+    staff_role = message.guild.get_role(686344052471234560)
+    if channel in locked_channels:
+        if not staff_role in message.author.roles:
+            await message.delete(delay=None)
     if message.author in mute_list:
         await message.delete(delay=None)
 
