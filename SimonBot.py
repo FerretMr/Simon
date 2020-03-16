@@ -355,7 +355,7 @@ async def on_member_join(member):
 @bot.event
 async def on_message(message):
     staff_role = message.guild.get_role(686344052471234560)
-    if channel in locked_channels:
+    if message.channel in locked_channels:
         if not staff_role in message.author.roles:
             await message.delete(delay=None)
     if message.author in mute_list:
