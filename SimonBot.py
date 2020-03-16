@@ -9,7 +9,7 @@ from threading import Thread
 #Common Settings;
 Prefix = '?'
 bot = commands.Bot(command_prefix=Prefix,help_command=None)
-token = 'Njg2NTgyODMwODM4MzE3MDg4.XmZUWQ.qcZuOX1DLPJZr6iwhhgUrAjdwHk'
+token = 'Njg2NTgyODMwODM4MzE3MDg4.Xm-GfQ.fCkA61BJvlFT-jIln_Dge1w1MMI'
 main_status = "Divine || ?help"
 guild = bot.get_guild(686333272359436359)
 Bad_Words = ['nigga','nigger','niggeran','Nigga','NIGGA','NIggA','niGaa','fuck','f*','f***','f*ck','shit','shitty','fucking','f*cking','fucky','sh*t','shite','ass','asshole','assh*le','bitch','b*tch','dick','d*ck','cunt','c*nt','pussy','p*ssy','c*ck','cock','fucker']
