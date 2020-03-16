@@ -6,6 +6,7 @@ import random
 import threading
 from threading import Thread
 
+
 #Common Settings;
 Prefix = '?'
 bot = commands.Bot(command_prefix=Prefix,help_command=None)
